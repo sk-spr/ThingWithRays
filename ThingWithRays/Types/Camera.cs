@@ -17,22 +17,22 @@ public struct Camera
         for (int y = 0; y < ResY; y++)
         {
             float angleY = (FovY) * ((float) (y - ResY * 0.5f) / (ResY));
-            Console.WriteLine(angleY);
+            //Console.WriteLine(angleY);
             for (int x = 0; x < ResX; x++)
             {
                 float angleX = (FovX) * ((float) (x - ResX * 0.5f) / (ResX));
                 Vector3 vec = Vector3.Transform(Vector3.UnitZ,
-                    Quaternion.CreateFromYawPitchRoll(float.DegreesToRadians(angleY), float.DegreesToRadians(angleX),
+                    Quaternion.CreateFromYawPitchRoll(float.DegreesToRadians(angleX), float.DegreesToRadians(angleY),
                         0f));
-                    // Vector3.Transform(
-                    //     Vector3.UnitZ,
-                    //     Quaternion.CreateFromAxisAngle(
-                    //         Vector3.UnitY, 
-                    //         float.DegreesToRadians(angleX)))
-                    // + Vector3.Transform(Vector3.UnitZ, Quaternion.CreateFromAxisAngle(
-                    //     Vector3.UnitY, 
-                    //     float.DegreesToRadians(angleX)));
-                
+                // Vector3.Transform(
+                //     Vector3.UnitZ,
+                //     Quaternion.CreateFromAxisAngle(
+                //         Vector3.UnitY, 
+                //         float.DegreesToRadians(angleX)))
+                // + Vector3.Transform(Vector3.UnitZ, Quaternion.CreateFromAxisAngle(
+                //     Vector3.UnitY, 
+                //     float.DegreesToRadians(angleX)));
+                vec = Vector3.Transform(vec, Rotation);
                 rays.Add(new(){Direction = vec, StartPoint = Position});
             }
         }

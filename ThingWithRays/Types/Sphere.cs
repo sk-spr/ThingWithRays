@@ -14,11 +14,13 @@ public class Sphere : ISceneObject
     }
     public Vector3 Position { get; set; }
     public Quaternion Rotation { get; set; }
+    public Material Material { get; set; }
     private Color _objectColor;
     public float Radius { get; private set; }
     public RayCastResult Intersect(Ray ray)
     {
         RayCastResult r = new RayCastResult();
+        r.CastAgainst = this;
         Vector3 L = Position - ray.StartPoint;
         float tc = Vector3.Dot(L, ray.Direction);
         if (tc < 0.0)
@@ -44,6 +46,7 @@ public class Sphere : ISceneObject
         r.HitDistEntry = float.Min(t1, t2);
         r.HitDistExit = float.Max(t1, t2);
         r.HitColor = _objectColor;
+        r.Normal = Vector3.Normalize(Position - (ray.StartPoint + ray.Direction * r.HitDistEntry.GetValueOrDefault()));
         return r;
     }
 }
